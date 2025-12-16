@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MedCore | Patient Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --primary: #0f766e;
+    --primary-light: #0ea5a4;
+    --primary-faint: #e6fffa;
+    --bg-color: #f4f8fb;
+    --text-dark: #2d3748;
+    --text-gray: #718096;
+    --white: #ffffff;
+    --border-radius: 16px;
+    --card-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+/* Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    min-height: 100vh;
+}
+a { text-decoration: none; }
+
+/* Header */
+header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    padding: 25px 20px 60px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.header-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+.logo-area { display: flex; align-items: center; gap: 12px; }
+.logo-area h1 { font-size: 24px; font-weight: 700; }
+.logo-area span {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-left: 10px;
+    border-left: 1px solid rgba(255,255,255,0.3);
+    padding-left: 10px;
+}
+.back-btn {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+}
+.back-btn:hover {
+    background: white;
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin: -60px auto 40px;
+    padding: 0 20px;
+}
+
+/* Profile Card */
+.profile-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out;
+}
+.card-banner {
+    height: 140px;
+    background: linear-gradient(120deg, var(--primary-faint), #d1fae5);
+    position: relative;
+}
+.card-banner::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--primary);
+}
+
+/* Profile Header */
+.profile-content { padding: 0 40px 40px; }
+.profile-header-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: -70px;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+.avatar-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 4px solid var(--white);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+.title-block h2 { font-size: 28px; font-weight: 700; margin-bottom: 5px; }
+.title-block .badge {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 6px 14px;
+    background: var(--primary-faint);
+    color: var(--primary);
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Info Grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+/* Section Header */
+.section-title {
+    grid-column: 1/-1;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    margin: 20px 0 10px 0;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 5px;
+}
+
+/* Info Card */
+.info-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+    border-left: 4px solid var(--primary-light);
+}
+.info-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+}
+.info-icon {
+    width: 45px;
+    height: 45px;
+    background: var(--bg-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-gray);
+    font-size: 18px;
+    flex-shrink: 0;
+}
+.info-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-gray);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.info-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    word-break: break-word;
+}
+
+/* Footer */
+footer {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-gray);
+    opacity: 0.8;
+    padding-bottom: 20px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .profile-header-section { margin-top: -50px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo-area">
+            <i class="fas fa-notes-medical" style="font-size: 24px;"></i>
+            <div>
+                <h1>MedCore</h1>
+            </div>
+            <span>Patient Portal</span>
+        </div>
+        <a href="{% url 'home' %}" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+</header>
+
+<div class="container">
+    <div class="profile-card">
+        <div class="card-banner"></div>
+        <div class="profile-content">
+            <div class="profile-header-section">
+                <div class="avatar-placeholder">
+                    <i class="fas fa-user-injured"></i>
+                </div>
+                <div class="title-block">
+                    <h2>{{ patient.name }}</h2>
+                    <span class="badge">{{ patient.status }}</span>
+                </div>
+            </div>
+
+            <div class="info-grid">
+
+                <div class="section-title">Basic Info</div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-id-card"></i></div>
+                    <div><div class="info-label">Patient ID</div><div class="info-value">{{ patient.id }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div><div class="info-label">Age</div><div class="info-value">{{ patient.age }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-envelope"></i></div>
+                    <div><div class="info-label">Email</div><div class="info-value">{{ patient.email }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div><div class="info-label">Phone</div><div class="info-value">{{ patient.phonenumber }}</div></div>
+                </div>
+
+                <div class="section-title">Appointment Info</div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div><div class="info-label">Appointment Date</div><div class="info-value">{{ patient.appointmentdate }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-user-md"></i></div>
+                    <div><div class="info-label">Staff</div><div class="info-value">{{ patient.appointmentstaff }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-notes-medical"></i></div>
+                    <div><div class="info-label">Purpose</div><div class="info-value">{{ patient.appointmentpurpose }}</div></div>
+                </div>
+
+                <div class="section-title">Vitals</div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-heartbeat"></i></div>
+                    <div><div class="info-label">Pulse</div><div class="info-value">{{ patient.vitalpulse }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-temperature-high"></i></div>
+                    <div><div class="info-label">Temperature</div><div class="info-value">{{ patient.Vitaltemp }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-weight-hanging"></i></div>
+                    <div><div class="info-label">Pain</div><div class="info-value">{{ patient.vitalpain }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <div><div class="info-label">BP</div><div class="info-value">{{ patient.vitalbp }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-lungs"></i></div>
+                    <div><div class="info-label">Respiration</div><div class="info-value">{{ patient.vitalresp }}</div></div>
+                </div>
+
+                <div class="section-title">Medical Info</div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-procedures"></i></div>
+                    <div><div class="info-label">Condition</div><div class="info-value">{{ patient.condition }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-pills"></i></div>
+                    <div><div class="info-label">Drug</div><div class="info-value">{{ patient.Drug }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-notes-medical"></i></div>
+                    <div><div class="info-label">Doctor Notes</div><div class="info-value">{{ patient.docnotes }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-history"></i></div>
+                    <div><div class="info-label">Medical History</div><div class="info-value">{{ patient.medhistory }}</div></div>
+                </div>
+
+                <div class="section-title">Lab Info</div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-vials"></i></div>
+                    <div><div class="info-label">Lab Test</div><div class="info-value">{{ patient.labtest }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <div><div class="info-label">Lab Date</div><div class="info-value">{{ patient.labdate }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-check-circle"></i></div>
+                    <div><div class="info-label">Lab Result</div><div class="info-value">{{ patient.labresult }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-sticky-note"></i></div>
+                    <div><div class="info-label">Lab Notes</div><div class="info-value">{{ patient.labnotes }}</div></div>
+                </div>
+
+                <div class="section-title">Billing Info</div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-money-bill-wave"></i></div>
+                    <div><div class="info-label">Bill</div><div class="info-value">{{ patient.bill }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div><div class="info-label">Bill Date</div><div class="info-value">{{ patient.Datebill }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                    <div><div class="info-label">Bill Status</div><div class="info-value">{{ patient.billstatus }}</div></div>
+                </div>
+
+                <div class="section-title">Prescriptions</div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <div><div class="info-label">Drug Time</div><div class="info-value">{{ patient.drugtime }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-capsules"></i></div>
+                    <div><div class="info-label">Dosage</div><div class="info-value">{{ patient.dosage }}</div></div>
+                </div>
+                <div class="info-item"><div class="info-icon"><i class="fas fa-user-md"></i></div>
+                    <div><div class="info-label">Prescriber</div><div class="info-value">{{ patient.prescriber }}</div></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>MedCore © 2025 — Confidential Patient Information</p>
+    </footer>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MindCare Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Inter", "Segoe UI", Tahoma, sans-serif;
+            background: #f4f8fb;
+            color: #2d3748;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0f766e, #0ea5a4);
+            color: white;
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        header p {
+            margin-top: 8px;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .home-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.95);
+            color: #0f766e;
+            padding: 10px 18px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background 0.2s ease;
+        }
+
+        .home-btn:hover {
+            background: #ffffff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.07);
+            padding: 28px;
+        }
+
+        h2 {
+            margin-bottom: 22px;
+            color: #0f766e;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        th, td {
+            padding: 16px 14px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f0fdfa;
+            font-weight: 700;
+            color: #065f5b;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .severity-mild {
+            color: #15803d;
+            font-weight: 600;
+        }
+
+        .severity-moderate {
+            color: #b45309;
+            font-weight: 600;
+        }
+
+        .severity-severe {
+            color: #b91c1c;
+            font-weight: 600;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="{%url 'home'%}" class="home-btn">← Home</a>
+    <h1>MindCare Admin Dashboard</h1>
+    <p>Client Overview & Care Coordination</p>
+</header>
+
+<div class="container">
+    <div class="card">
+        <h2>Registered Individuals</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Assigned Social Worker</th>
+                    <th>Condition Severity</th>
+                    <th>Mental_Condition</th>
+                </tr>
+            </thead>
+            <tbody>
+            {%for u in user%}
+                <tr>
+                    <td>{{u.name}}</td>
+            
+                    <td>{{u.socialworker}}</td>
+                
+                    <td class="
+    {% if u.conditionseverity == 'Mild' %}severity-mild
+    {% elif u.conditionseverity == 'Moderate' %}severity-moderate
+    {% elif u.conditionseverity == 'Severe' %}severity-severe
+    {% endif %}
+">
+    {{ u.conditionseverity }}
+</td>
+
+                    
+                    <td>{{u.mentalillness}}</td>
+                    
+                </tr>
+                {%endfor%}
+
+                {% comment %} <tr>
+                    <td>Grace Williams</td>
+                    <td>Samuel Ade</td>
+                    <td class="severity-moderate">Moderate</td>
+                    <td>Tailoring, creativity</td>
+                </tr>
+                <tr>
+                    <td>Michael Brown</td>
+                    <td>Fatima Bello</td>
+                    <td class="severity-severe">Severe</td>
+                    <td>Data entry, organization</td>
+                </tr> {% endcomment %}
+            </tbody>
+        </table>
+    </div>
+
+    <footer style="position:fixed; bottom: 6px; text-align: center; width: 100%; left: 0;">
+        MindCare © 2025 — Authorized personnel only
+    </footer>
+</div>
+
+</body>
+</html>

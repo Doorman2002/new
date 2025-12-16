@@ -1,0 +1,708 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedVerify Nigeria | Your Shield Against Counterfeit Medication</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #008751; /* Nigerian Green */
+            --primary-dark: #006039;
+            --secondary: #004d40;
+            --accent: #FFD700; /* Gold/Warning */
+            --text-dark: #1F2937;
+            --text-light: #6B7280;
+            --white: #ffffff;
+            --light-bg: #F3F4F6;
+            --danger: #EF4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+            box-shadow: 0 4px 14px rgba(0, 135, 81, 0.3);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navbar */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
+            position: relative;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .hero-text span {
+            color: var(--primary);
+        }
+
+        .hero-text p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .phone-mockup {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            margin: 0 auto;
+            display: block;
+            border: 8px solid #333;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        /* Simulation Box */
+        .simulation-overlay {
+            padding: 20px;
+            text-align: center;
+            background: #FAFAFA;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .scan-line {
+            width: 100%;
+            height: 2px;
+            background: var(--danger);
+            position: absolute;
+            top: 20%;
+            left: 0;
+            animation: scan 3s infinite linear;
+            box-shadow: 0 0 10px var(--danger);
+        }
+
+        @keyframes scan {
+            0% { top: 10%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 90%; opacity: 0; }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            padding: 30px;
+            border-radius: 20px;
+            background: var(--white);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .icon-box {
+            width: 60px;
+            height: 60px;
+            background: #ecfdf5;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.25rem;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Locator & Affordability (Split Section) */
+        .split-section {
+            padding: 100px 0;
+            background: var(--light-bg);
+        }
+
+        .split-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .split-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .feature-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .feature-list i {
+            color: var(--primary);
+            background: #fff;
+            padding: 8px;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Emergency Section */
+        .emergency {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .emergency h2 {
+            color: var(--white);
+            margin-bottom: 20px;
+        }
+
+        .emergency-btn {
+            background: var(--danger);
+            color: white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            margin-top: 30px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        
+        .emergency-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: #111827;
+            color: #9CA3AF;
+            padding: 60px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #9CA3AF;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #374151;
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .split-container {
+                grid-template-columns: 1fr;
+            }
+
+            .split-content {
+                order: 1;
+            }
+            
+            .split-image {
+                order: 2;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+        }
+
+        /* Fade In Animation Class */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-shield-virus"></i> MedVerify<span style="color:#000">.ng</span>
+                </div>
+                <ul class="nav-links">
+                    {% comment %} <li><a href="#features">Features</a></li>
+                    <li><a href="#locator">Pharmacy Locator</a></li>
+                    <li><a href="#community">Community</a></li>
+                    <li><a href="#partners">For Pharmacists</a></li> {% endcomment %}
+                    <li><a href="#" class="btn btn-primary" style="padding: 8px 20px;">Download App</a></li>
+                </ul>
+                <div class="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text fade-in">
+                    <h1>Safe Medicine.<br><span>Saved Lives.</span></h1>
+                    <p>Instantly verify NAFDAC numbers, detect fake drug packaging, and find licensed pharmacies near you. Join the network protecting 230+ million Nigerians.</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary"><i class="fab fa-google-play"></i> Get for Android</a>
+                        <a href="#" class="btn btn-outline"><i class="fab fa-apple"></i> iOS Store</a>
+                    </div>
+                    <div style="margin-top: 20px; font-size: 0.9rem; color: var(--primary);">
+                        <i class="fas fa-check-circle"></i> Integrated with NAFDAC & NHIS
+                    </div>
+                </div>
+                <div class="hero-image fade-in">
+                    <div class="phone-mockup">
+                        <div class="simulation-overlay" id="scan-simulation">
+                            <i class="fas fa-barcode" style="font-size: 5rem; color: #ccc; margin-bottom: 20px;"></i>
+                            <h3>Scan to Verify</h3>
+                            <p>Point camera at box</p>
+                            <div class="scan-line"></div>
+                            <div id="scan-result" style="display:none; margin-top: 20px; padding: 10px; background: #d1fae5; color: #065f46; border-radius: 8px; width: 80%;">
+                                <i class="fas fa-check-circle"></i> <strong>Authentic</strong><br>
+                                NAFDAC: A4-2391<br>
+                                Exp: 12/2026
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Features -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title fade-in">
+                <h2>Why Choose MedVerify?</h2>
+                <p>We combine AI technology with government databases to ensure the medication you buy is safe, effective, and genuine.</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card fade-in">
+                    <div class="icon-box">
+                        <i class="fas fa-qrcode"></i>
+                    </div>
+                    <h3>Instant Drug Authentication</h3>
+                    <p>Scan barcodes, NAFDAC numbers, or packaging. Our AI detects anomalies in packaging print while checking real-time against official databases.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card fade-in">
+                    <div class="icon-box">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3>Verified Pharmacy Locator</h3>
+                    <p>Stop guessing. Find nearby pharmacies that are licensed and verified. Read reviews from verified purchases and compare prices.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card fade-in">
+                    <div class="icon-box">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Affordability Finder</h3>
+                    <p>Find cheaper generic alternatives, check your NHIS insurance coverage, and see government subsidy eligibility instantly.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card fade-in">
+                    <div class="icon-box">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Safety Net</h3>
+                    <p>Report suspicious outlets anonymously. Chat with verified pharmacists for advice and see alerts on counterfeit batches in your area.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locator Section -->
+    <section id="locator" class="split-section">
+        <div class="container">
+            <div class="split-container">
+                <div class="split-image fade-in">
+                    <img src="{%static 'images/map.jpg'%}" alt="Map of Nigeria" style="width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                </div>
+                <div class="split-content fade-in">
+                    <h2>Find Licensed Pharmacies</h2>
+                    <p>Avoid unregistered patent medicine stores. Our map only shows pharmacies with active licenses.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i> Real-time inventory (Check if they have your drug)</li>
+                        <li><i class="fas fa-check"></i> Price transparency and comparison</li>
+                        <li><i class="fas fa-check"></i> Integration with NHIS for direct billing</li>
+                        <li><i class="fas fa-check"></i> Delivery options from partner pharmacies</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="margin-top: 20px;">Open Map</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community & Reporting -->
+    <section id="community" class="split-section" style="background: white;">
+        <div class="container">
+            <div class="split-container">
+                <div class="split-content fade-in">
+                    <h2>Community Alert System</h2>
+                    <p>Power to the people. When one user detects a fake, everyone stays safe. Our user-reported alert system creates a real-time safety heat map.</p>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-exclamation-triangle"></i> Upload photos of suspicious packaging</li>
+                        <li><i class="fas fa-bell"></i> Receive push alerts for fake batches in your city</li>
+                        <li><i class="fas fa-user-md"></i> "Ask a Pharmacist" chat feature</li>
+                        <li><i class="fas fa-shield-alt"></i> Anonymous reporting to NAFDAC</li>
+                    </ul>
+                </div>
+                <div class="split-image fade-in">
+                    <img src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Pharmacist checking drugs" style="width: 100%; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Emergency Section -->
+    <section class="emergency">
+        <div class="container fade-in">
+            <h2><i class="fas fa-ambulance"></i> Emergency Medicine Access</h2>
+            <p style="max-width: 700px; margin: 0 auto; color: #e5e7eb;">Running low on critical meds? We connect users needing urgent medication (insulin, inhalers, anti-retrovirals) with the nearest available verified supplier or donation programs.</p>
+            <a href="#" class="emergency-btn">Request Urgent Help</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <i class="fas fa-shield-virus"></i> MedVerify
+                    </div>
+                    <p>Digitizing trust in Nigeria's pharmaceutical supply chain. Protecting lives, one scan at a time.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Partners</h4>
+                    <ul>
+                        <li><a href="#">For Pharmacies</a></li>
+                        <li><a href="#">Government (NAFDAC)</a></li>
+                        <li><a href="#">Health Insurance (NHIS)</a></li>
+                        <li><a href="#">NGOs</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <div style="display: flex; gap: 15px; font-size: 1.5rem;">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 MedVerify Nigeria. All rights reserved. Not an official government site, but integrated with official data.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Intersection Observer for Fade-in Animations
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Simulation Script for Hero Section
+        function simulateScan() {
+            const resultBox = document.getElementById('scan-result');
+            const scanLine = document.querySelector('.scan-line');
+            
+            // Loop simulation
+            setInterval(() => {
+                // Reset
+                resultBox.style.display = 'none';
+                scanLine.style.animation = 'scan 3s infinite linear';
+                
+                // Show Result after 2 seconds
+                setTimeout(() => {
+                    resultBox.style.display = 'block';
+                    // Optional: pause scan line visually
+                }, 2000);
+
+            }, 5000); // Restart every 5 seconds
+        }
+
+        // Start simulation on load
+        window.addEventListener('load', simulateScan);
+    </script>
+</body>
+</html>

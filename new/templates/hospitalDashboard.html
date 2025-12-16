@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCare | Hospital Dashboard</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root {
+        --primary: #0f766e;
+        --secondary: #0ea5a4;
+        --accent-bg: #e6fffa;
+        --dark: #2d3748;
+        --gray: #718096;
+        --light-bg: #f4f8fb;
+        --white: #ffffff;
+        --danger: #e53e3e;
+        --warning: #dd6b20;
+        --success: #38a169;
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--light-bg);
+        color: var(--dark);
+    }
+
+    /* --- Navbar --- */
+    nav {
+        background: var(--white);
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-family: 'Poppins', sans-serif;
+        font-size: 22px;
+        color: var(--primary);
+        font-weight: 700;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: var(--gray);
+        margin-left: 20px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+        color: var(--primary);
+    }
+
+    .home-btn {
+        background: var(--accent-bg);
+        color: var(--primary) !important;
+        padding: 8px 16px;
+        border-radius: 8px;
+    }
+
+    /* --- Main Container --- */
+    .container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 300px 1fr; /* Sidebar-ish profile vs Content */
+        gap: 30px;
+    }
+
+    /* --- Profile/Upload Card --- */
+    .profile-card {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        height: fit-content;
+    }
+
+    .profile-upload-container {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin: 0 auto 20px;
+    }
+
+    .profile-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid var(--accent-bg);
+    }
+
+    .upload-icon {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        background: var(--primary);
+        color: white;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border: 2px solid white;
+        transition: transform 0.2s;
+    }
+
+    .upload-icon:hover {
+        transform: scale(1.1);
+    }
+
+    #fileInput {
+        display: none;
+    }
+
+    .admin-name {
+        font-family: 'Poppins', sans-serif;
+        font-size: 18px;
+        margin-bottom: 5px;
+        color: var(--dark);
+    }
+
+    .admin-role {
+        color: var(--gray);
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* --- Dashboard Content --- */
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    /* --- Stats Section --- */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 25px;
+        border-radius: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 8px 20px rgba(15, 118, 110, 0.2);
+    }
+
+    .stat-card.secondary {
+        background: white;
+        color: var(--dark);
+    }
+    
+    .stat-info h3 {
+        margin: 0;
+        font-size: 36px;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .stat-info p {
+        margin: 0;
+        opacity: 0.9;
+        font-size: 14px;
+    }
+
+    .stat-icon {
+        font-size: 40px;
+        opacity: 0.2;
+    }
+
+    .stat-card.secondary .stat-icon {
+        color: var(--primary);
+        opacity: 1;
+        background: var(--accent-bg);
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        font-size: 24px;
+    }
+
+    /* --- Tables --- */
+    .table-card {
+        background: var(--white);
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+        font-family: 'Poppins', sans-serif;
+        color: var(--primary);
+        font-size: 20px;
+        margin: 0;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 10px; /* Space between rows */
+    }
+
+    th {
+        text-align: left;
+        color: var(--gray);
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 10px 15px;
+    }
+
+    td {
+        background: white;
+        padding: 15px;
+        border-top: 1px solid #f0f0f0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    td:first-child {
+        border-left: 1px solid #f0f0f0;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+    }
+    
+    td:last-child {
+        border-right: 1px solid #f0f0f0;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+
+    tr {
+        transition: transform 0.2s;
+    }
+
+    tr:hover td {
+        background: #fafafa;
+        border-color: #e2e8f0;
+    }
+
+    /* --- Status Badges --- */
+    .badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+    }
+
+    .badge-mild { background: #e6fffa; color: var(--success); }
+    .badge-moderate { background: #fffaf0; color: var(--warning); }
+    .badge-severe { background: #fff5f5; color: var(--danger); }
+    
+    .badge-status-inbed { background: #ebf8ff; color: #3182ce; }
+    .badge-status-discharged { background: #f0fff4; color: var(--success); }
+    .badge-status-deceased { background: #edf2f7; color: var(--gray); }
+
+    .btn-view {
+        text-decoration: none;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 13px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .btn-view:hover {
+        text-decoration: underline;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 900px) {
+        .container {
+            grid-template-columns: 1fr;
+        }
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            text-align: left;
+        }
+        .profile-upload-container {
+            margin: 0;
+            width: 80px;
+            height: 80px;
+        }
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav>
+    <div class="brand">
+        <i class="fa-solid fa-heart-pulse"></i> MedCore
+    </div>
+    <div class="nav-links">
+        <a href="{% url 'home' %}" class="home-btn"><i class="fa-solid fa-arrow-left"></i> Home</a>
+        {% comment %} <a href="#" class="active">Dashboard</a>
+        <a href="#">Settings</a> {% endcomment %}
+        <a href="{%url 'Logout'%}" >Logout</a>
+    </div>
+</nav>
+
+<div class="container">
+    
+    <!-- Sidebar / Profile Area -->
+    <aside>
+        <div class="profile-card">
+            <!-- Image Upload Section -->
+            <div class="profile-upload-container">
+                <img src="https://via.placeholder.com/150" alt="Admin Profile" class="profile-img" id="profileImage">
+                <label for="fileInput" class="upload-icon" title="Upload Picture">
+                    <i class="fa-solid fa-camera"></i>
+                </label>
+                <input type="file" id="fileInput" accept="image/*">
+            </div>
+            
+            <h3 class="admin-name">Alex Mercer</h3>
+            <p class="admin-role">Head Administrator</p>
+            
+            <div style="border-top: 1px solid #eee; margin-top: 15px; padding-top: 15px; text-align: left;">
+                <p style="font-size: 13px; color: #718096; margin-bottom: 5px;"><i class="fa-regular fa-envelope"></i> alex.m@mindcare.com</p>
+                <p style="font-size: 13px; color: #718096;"><i class="fa-solid fa-phone"></i> +234 093 3326 7890</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        
+        <!-- Stats Widgets -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-info">
+                    <p>Total Patients</p>
+                    <h3>{{patient | length}}</h3>
+                </div>
+                <div class="stat-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </div>
+            
+            <div class="stat-card secondary">
+                <div class="stat-info">
+                    <p>Active Staff</p>
+                    <h3 style="color: var(--primary)">{{staff | length}}</h3>
+                </div>
+                <div class="stat-icon">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+            </div>
+            
+            <div class="stat-card secondary">
+                <div class="stat-info">
+                    <p>Critical Cases</p>
+                    <h3 style="color: var(--danger)">0</h3>
+                </div>
+                <div class="stat-icon" style="color: var(--danger); background: #fff5f5;">
+                    <i class="fa-solid fa-procedures"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patients Table -->
+        <div class="table-card">
+            <div class="section-header">
+                <h2>Recent Patients</h2>
+                {% comment %} <button style="background:var(--primary); color:white; border:none; padding:8px 15px; border-radius:6px; cursor:pointer;">
+                    <i class="fa-solid fa-plus"></i> Add Patient
+                </button> {% endcomment %}
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Age</th>
+                        <th>Condition</th>
+                        <th>Status</th>
+                        <th>Bill</th>
+                        <th>More</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for p in patient%}
+                    <tr>
+                        <td style="font-weight: 600;">{{p.name}}</td>
+                        <td>{{p.Age}}</td>
+                        <td><span class="badge badge-mild">{{p.condition}}</span></td>
+                        {% comment %} <td><span class="badge badge-status-inbed">{{p.drug}}</span></td> {% endcomment %}
+                        <td><span class="badge badge-status-inbed">{{p.status}}</span></td>
+                        <td><span class="badge badge-status-inbed">{{p.bill}}</span></td>
+                        <td><a href="{%url 'patientDashboard'  %}p.id" class="btn-view">More Details<i class="fa-solid fa-chevron-right"></i></a></td>
+                    </tr>
+                    {%endfor%}
+                    {% comment %} <tr>
+                        <td style="font-weight: 600;">Grace Williams</td>
+                        <td>Samuel Ade</td>
+                        <td><span class="badge badge-moderate">Moderate</span></td>
+                        <td><span class="badge badge-status-discharged">Discharged</span></td>
+                        <td><a href="#" class="btn-view">Details <i class="fa-solid fa-chevron-right"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Michael Brown</td>
+                        <td>Fatima Bello</td>
+                        <td><span class="badge badge-severe">Severe</span></td>
+                        <td><span class="badge badge-status-deceased">Deceased</span></td>
+                        <td><a href="#" class="btn-view">Details <i class="fa-solid fa-chevron-right"></i></a></td>
+                    </tr> {% endcomment %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Staff Table -->
+        <div class="table-card">
+            <div class="section-header">
+                <h2>Hospital Staff</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {%for s in staff%}
+                    <tr>
+                        <td style="display:flex; align-items:center; gap:10px;">
+                            <div style="width:30px; height:30px; background:#e6fffa; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--primary); font-size:12px;">MO</div>
+                            {{s.name}}
+                        </td>
+                        <td>{{s.occupation}}</td>
+                        <td>{{s.email}}</td>
+                        <td><a href="{% url 'staffDashboard'  %}s.id" class="btn-view">More Info</a></td>
+                    </tr>
+                    {%endfor%}
+                    {% comment %} <tr>
+                        <td style="display:flex; align-items:center; gap:10px;">
+                            <div style="width:30px; height:30px; background:#e6fffa; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--primary); font-size:12px;">SA</div>
+                            Samuel Ade
+                        </td>
+                        <td>Psychiatrist</td>
+                        <td>samuel.ade@hospital.com</td>
+                        <td><a href="#" class="btn-view">Profile</a></td>
+                    </tr> {% endcomment %}
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+</div>
+
+<footer>
+    <p style="text-align: center; color: var(--gray); font-size: 13px; margin-bottom: 30px;">
+        MindCare Hospital Dashboard © 2025 — Authorized Personnel Only
+    </p>
+</footer>
+
+<!-- Script for Image Upload Preview -->
+<script>
+    const fileInput = document.getElementById('fileInput');
+    const profileImage = document.getElementById('profileImage');
+
+    fileInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                profileImage.src = e.target.result;
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+
+</body>
+</html>

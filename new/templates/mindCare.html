@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Registration | MindCare</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", "Segoe UI", Tahoma, sans-serif;
+            background: linear-gradient(135deg, #e6fffa, #f0fdfa);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 540px;
+            padding: 42px;
+            border-radius: 22px;
+            box-shadow: 0 20px 50px rgba(15, 118, 110, 0.15);
+            position: relative;
+        }
+
+        /* Home button */
+        .home-btn {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            padding: 8px 14px;
+            background: #e6fffa;
+            color: #0f766e;
+            text-decoration: none;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .home-btn:hover {
+            background: #ccfbf1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #0f766e;
+            margin-bottom: 8px;
+            font-size: 26px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #475569;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #1f2937;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 22px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #0f766e;
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #0f766e, #0ea5a4);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 25px rgba(15, 118, 110, 0.3);
+        }
+
+        .dashboard-btn {
+            display: block;
+            text-align: center;
+            margin-top: 18px;
+            padding: 14px;
+            background: #f1f5f9;
+            color: #0f766e;
+            text-decoration: none;
+            border-radius: 14px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+
+        .dashboard-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .note {
+            margin-top: 22px;
+            font-size: 12px;
+            color: #64748b;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Home Button -->
+    <!-- If using Django, replace href="/" with {% url 'home' %} -->
+    <a href="{%url 'home'%}" class="home-btn">← Home</a>
+
+    <h1>MindCare Registration</h1>
+    <p class="subtitle">
+        Secure client onboarding for mental health care coordination
+    </p>
+
+    <form method="POST" >
+        {% csrf_token %} 
+    {%for message in messages%}
+        <div>
+            {{message}}
+        </div>
+    {%endfor%}
+
+        <label for="name">Client Full Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" min="1" required>
+
+        <label for="social_worker">Assigned Social Worker</label>
+        <input type="text" id="social_worker" name="social_worker" required>
+
+        <label for="condition">Mental Health Condition</label>
+        <input type="text" id="condition" name="condition" required>
+
+        <label for="severity">Condition Severity</label>
+        <select id="severity" name="severity" required>
+            <option value="">-- Select Severity --</option>
+            <option value="mild">Mild</option>
+            <option value="moderate">Moderate</option>
+            <option value="severe">Severe</option>
+        </select>
+
+        <label for="notes">Additional Notes (Optional)</label>
+        <textarea id="notes" name="notes" rows="4"></textarea>
+
+        <button type="submit">Register Client</button>
+    </form>
+
+    <!-- Dashboard Button -->
+    <a href="{%url 'mindcareDashboard'%}" class="dashboard-btn">
+        Go to Dashboard
+    </a>
+
+    <div class="note">
+        All client information is handled confidentially and securely.
+    </div>
+
+</div>
+
+</body>
+</html>

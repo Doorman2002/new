@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedCore Medical Center | Home</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root {
+        --primary: #0f766e;
+        --secondary: #0ea5a4;
+        --dark: #2d3748;
+        --light-bg: #f4f8fb;
+        --white: #ffffff;
+        --accent: #e6fffa;
+        --text-gray: #4a5568;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        font-family: 'Inter', sans-serif;
+        background-color: var(--light-bg);
+        color: var(--dark);
+        overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    /* --- Navbar --- */
+    nav {
+        background: var(--white);
+        padding: 15px 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    .brand {
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 30px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+    .nav-buttons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .btn {
+        padding: 10px 24px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.3s;
+        display: inline-block;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .btn-outline {
+        border: 2px solid var(--primary);
+        color: var(--primary);
+        background: transparent;
+    }
+
+    .btn-outline:hover {
+        background: var(--primary);
+        color: white;
+    }
+
+    .btn-fill {
+        background: var(--primary);
+        color: white;
+        border: 2px solid var(--primary);
+    }
+
+    .btn-fill:hover {
+        background: var(--secondary);
+        border-color: var(--secondary);
+    }
+
+    /* --- Hero Section --- */
+    .hero {
+        background: linear-gradient(rgba(15, 118, 110, 0.85), rgba(15, 118, 110, 0.7)), 
+                    url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+        background-size: cover;
+        background-position: center;
+        height: 85vh; /* Almost full screen */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        padding: 0 20px;
+        position: relative;
+    }
+
+    .hero-content {
+        max-width: 800px;
+        animation: fadeIn 1.5s ease;
+    }
+
+    .hero h1 {
+        font-size: 56px;
+        margin-bottom: 20px;
+        line-height: 1.2;
+    }
+
+    .hero p {
+        font-size: 20px;
+        margin-bottom: 40px;
+        opacity: 0.9;
+    }
+
+    /* Floating Quick Access Cards */
+    .quick-access {
+        max-width: 1100px;
+        margin: -80px auto 60px; /* Pulls cards up into Hero */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        padding: 0 20px;
+        position: relative;
+        z-index: 10;
+    }
+
+    .qa-card {
+        background: white;
+        padding: 35px;
+        border-radius: 12px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+        text-align: left;
+        border-bottom: 4px solid var(--primary);
+    }
+
+    .qa-card:hover {
+        transform: translateY(-10px);
+    }
+
+    .qa-icon {
+        background: var(--accent);
+        color: var(--primary);
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .qa-card h3 { margin: 0 0 10px; color: var(--dark); font-size: 20px; }
+    .qa-card p { color: var(--text-gray); font-size: 14px; line-height: 1.6; }
+
+    /* --- About Section --- */
+    .section {
+        padding: 80px 20px;
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
+    .split-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+    }
+
+    .about-img {
+        width: 100%;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .section-title {
+        color: var(--primary);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    h2 { font-size: 36px; margin-bottom: 20px; line-height: 1.3; }
+    
+    .check-list li {
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-weight: 500;
+    }
+
+    .check-list i {
+        color: var(--primary);
+        background: var(--accent);
+        padding: 5px;
+        border-radius: 50%;
+    }
+
+    /* --- Services Grid --- */
+    .bg-light { background-color: white; }
+
+    .service-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        margin-top: 50px;
+    }
+
+    .service-card {
+        background: var(--light-bg);
+        padding: 30px;
+        border-radius: 16px;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+    .service-card:hover {
+        background: white;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    }
+
+    .service-card i {
+        font-size: 40px;
+        color: var(--primary);
+        margin-bottom: 20px;
+    }
+
+    /* --- Login Portal Section --- */
+    .portal-section {
+        background: linear-gradient(135deg, var(--dark), #1a202c);
+        color: white;
+        border-radius: 24px;
+        padding: 60px;
+        text-align: center;
+        margin: 80px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Abstract shapes background */
+    .portal-section::before {
+        content: '';
+        position: absolute;
+        top: -50px; left: -50px;
+        width: 200px; height: 200px;
+        background: var(--primary);
+        opacity: 0.1;
+        border-radius: 50%;
+    }
+
+    .portal-grid {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .portal-card {
+        background: rgba(255,255,255,0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        padding: 30px;
+        border-radius: 16px;
+        width: 300px;
+        transition: 0.3s;
+    }
+
+    .portal-card:hover {
+        background: rgba(255,255,255,0.1);
+        transform: translateY(-5px);
+    }
+
+    /* --- Footer --- */
+    footer {
+        background: var(--primary);
+        color: white;
+        padding: 60px 20px 20px;
+    }
+
+    .footer-content {
+        max-width: 1100px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        margin-bottom: 40px;
+    }
+
+    .footer-col h4 { font-size: 18px; margin-bottom: 20px; }
+    .footer-col ul { list-style: none; padding: 0; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col a { color: rgba(255,255,255,0.8); text-decoration: none; }
+    .footer-col a:hover { color: white; }
+
+    .copyright {
+        text-align: center;
+        border-top: 1px solid rgba(255,255,255,0.2);
+        padding-top: 20px;
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero h1 { font-size: 36px; }
+        .split-layout { grid-template-columns: 1fr; }
+        .nav-links { display: none; } /* Simplified mobile menu */
+        .portal-grid { flex-direction: column; align-items: center; }
+    }
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <div class="brand">
+        <i class="fa-solid fa-heart-pulse"></i> MedCore
+    </div>
+    <div class="nav-links">
+        
+        <a href="{%url 'aboutCare'%}">About Us</a>
+        {% comment %} <a href="#">Services</a> {% endcomment %}
+        <a href="{%url 'mindcare'%}">MindCare </a>
+        <a href="{%url 'medverify'%}">MedVerify</a>
+    </div>
+    <div class="nav-buttons">
+        <!-- Links to the dashboards you asked for -->
+        <a href="{%url 'signup'%}" target="_blank" class="btn btn-outline">Hospital Portal
+        </a>
+        <a href="{%url 'staffLogin'%}" target="_blank" class="btn btn-fill">Staff Portal</a>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Compassionate Care,<br>Modern Solutions.</h1>
+        <p>Your health journey starts here. MedCore combines advanced technology with human connection to provide the best mental and physical care.</p>
+        <!-- <div style="margin-top: 30px;">
+            <a href="patient-dashboard.html" class="btn btn-fill" style="padding: 15px 35px; font-size: 16px;">Book Appointment</a>
+            <a href="about.html" class="btn btn-outline" style="border-color: white; color: white; margin-left: 15px;">Learn More</a>
+        </div> -->
+    </div>
+</section>
+
+<!-- Floating Quick Access Cards -->
+<div class="quick-access">
+    <div class="qa-card">
+        <div class="qa-icon"><i class="fa-regular fa-calendar-check"></i></div>
+        <h3>Book Appointment</h3>
+        <p>Schedule a visit with our top specialists in just a few clicks through your MedCore patient portal.</p>
+    </div>
+    <div class="qa-card">
+        <div class="qa-icon"><i class="fa-solid fa-user-doctor"></i></div>
+        <h3>Find a Doctor</h3>
+        <p>Browse our directory of experienced psychiatrists, therapists, and general practitioners.</p>
+    </div>
+    <div class="qa-card">
+        <div class="qa-icon"><i class="fa-solid fa-truck-medical"></i></div>
+        <h3>Emergency Care</h3>
+        <p>24/7 support for critical situations. We are always here when you need us the most.</p>
+    </div>
+</div>
+
+<!-- About Introduction -->
+<section class="section">
+    <div class="split-layout">
+        <div>
+            <span class="section-title">Who We Are</span>
+            <h2>Leading the Way in Medical Excellence</h2>
+            <p style="color: var(--text-gray); margin-bottom: 20px;">MedCore isn't just a hospital; it's a sanctuary for healing. We integrate Electronic Health Records (EHR) with top-tier medical expertise.</p>
+            <ul class="check-list" style="list-style: none; padding: 0;">
+                <li><i class="fa-solid fa-check"></i> Comprehensive Mental Health Support</li>
+                <li><i class="fa-solid fa-check"></i> 24/7 Digital Patient Access</li>
+                <li><i class="fa-solid fa-check"></i> State-of-the-art Medical Facilities</li>
+            </ul>
+            <a href="{%url 'aboutCare'%}" class="btn btn-fill" style="margin-top: 20px;">Read Our Story</a>
+        </div>
+        <div>
+            <img src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Doctor team" class="about-img">
+        </div>
+    </div>
+</section>
+
+<!-- Services Grid -->
+<section class="section bg-light" style="max-width: 100%; padding: 80px 5%;">
+    <div style="text-align: center; max-width: 700px; margin: auto;">
+        <span class="section-title">Our Services</span>
+        <h2>Holistic Care For Everyone</h2>
+        <p style="color: var(--text-gray);">From general checkups to specialized mental health therapies.</p>
+    </div>
+
+    <div class="service-grid" style="max-width: 1100px; margin: 50px auto 0;">
+        <div class="service-card">
+            <i class="fa-solid fa-brain"></i>
+            <h3>Psychiatry</h3>
+            <p style="font-size: 14px; color: var(--text-gray);">Expert diagnosis and treatment for mental health conditions.</p>
+        </div>
+        <div class="service-card">
+            <i class="fa-solid fa-notes-medical"></i>
+            <h3>Digital Records</h3>
+            <p style="font-size: 14px; color: var(--text-gray);">Secure, accessible EHRs for patients and doctors.</p>
+        </div>
+        <div class="service-card">
+            <i class="fa-solid fa-baby"></i>
+            <h3>Pediatrics</h3>
+            <p style="font-size: 14px; color: var(--text-gray);">Compassionate care for infants, children, and adolescents.</p>
+        </div>
+        <div class="service-card">
+            <i class="fa-solid fa-flask"></i>
+            <h3>Laboratory</h3>
+            <p style="font-size: 14px; color: var(--text-gray);">Fast and accurate diagnostic testing services.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Login Portals (Direct access to previous pages) -->
+<div class="portal-section" id="portal">
+    <h2>Access Your Dashboard</h2>
+    <p style="opacity: 0.8; max-width: 600px; margin: 10px auto;">Securely manage your appointments, view medical records, or manage hospital staff.</p>
+    
+    <div class="portal-grid">
+        <div class="portal-card">
+            <i class="fa-solid fa-user-injured" style="font-size: 40px; color: var(--secondary); margin-bottom: 20px;"></i>
+            <h3>Hospital Portal</h3>
+            <p style="font-size: 14px; opacity: 0.7;">View vitals, prescriptions, and book appointments.</p>
+            <a href="{%url 'patientSignup'%}" target="_blank" class="btn btn-fill" style="margin-top: 15px; width: 100%;">Login as Patient</a>
+        </div>
+
+        <div class="portal-card">
+            <i class="fa-solid fa-user-doctor" style="font-size: 40px; color: var(--secondary); margin-bottom: 20px;"></i>
+            <h3>Staff Portal</h3>
+            <p style="font-size: 14px; opacity: 0.7;">Manage patients, update records, and view schedules.</p>
+            <a href="{%url 'staffLogin'%}"   target="_blank" class="btn btn-outline" style="border-color: white; color: white; margin-top: 15px; width: 100%;">Login as Staff</a>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-col">
+            <div class="brand" style="color: white; margin-bottom: 20px;">
+                <i class="fa-solid fa-heart-pulse"></i> MedCore
+            </div>
+            <p style="opacity: 0.8; font-size: 14px; line-height: 1.6;">
+                Providing world-class medical and mental health services with a focus on technology and compassion.
+            </p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                {% comment %} <li><a href="index.html">Home</a></li> {% endcomment %}
+                <li><a href="{%url 'aboutCare'%}">About Us</a></li>
+                {% comment %} <li><a href="#">Our Doctors</a></li> {% endcomment %}
+                {% comment %} <li><a href="#">Contact</a></li> {% endcomment %}
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Services</h4>
+            <ul>
+                <li><a href=>Mental Health</a></li>
+                <li><a href=>General Medicine</a></li>
+                <li><a href=>Diagnostics</a></li>
+                <li><a href=>Emergency</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Contact</h4>
+            <ul style="font-size: 14px; opacity: 0.9;">
+                <li><i class="fa-solid fa-location-dot"></i> Brass Street, Aba</li>
+                <li><i class="fa-solid fa-phone"></i> +234 800 123 4567</li>
+                <li><i class="fa-solid fa-envelope"></i> help@medcore.com</li>
+            </ul>
+        </div>
+    </div>
+    <div class="copyright">
+        MedCore © 2025 — Empowering mental health through technology
+    </div>
+</footer>
+
+</body>
+</html>

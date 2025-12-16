@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% comment %} Done {% endcomment %}
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedCare | Login</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        background: linear-gradient(135deg, #f0fdfa, #e6fffa);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .container {
+        background: white;
+        width: 100%;
+        max-width: 400px;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        position: relative;
+    }
+
+    h1 {
+        text-align: center;
+        color: #0f766e;
+        margin-bottom: 15px;
+    }
+
+    p.subtitle {
+        text-align: center;
+        color: #4a5568;
+        margin-bottom: 30px;
+        font-size: 14px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 6px;
+        font-weight: 600;
+        color: #2d3748;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        border: 1px solid #cbd5e0;
+        font-size: 14px;
+    }
+
+    button {
+        width: 100%;
+        padding: 14px;
+        background: #0f766e;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #115e59;
+    }
+
+    .signup-link {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .signup-link a {
+        color: #0f766e;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    /* Home Button */
+    .home-btn {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        background: #0ea5a4;
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: 0.2s ease;
+    }
+    .home-btn:hover {
+        background: #0f766e;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Home Button -->
+    <a href="{% url 'home' %}" class="home-btn">← Home</a>
+    <div style="text-align:center;">
+         {%for message in messages%}
+        <h3 style="color:green; font-weight:300">
+            {{message}}
+        </h3>
+        {%endfor%}
+    </div>
+
+    <h1>Login</h1>
+    <p class="subtitle">Access your MedCare Dashboard</p>
+
+    <form method="POST" >
+        {%csrf_token%}
+       
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <div class="signup-link">
+        Don't have an account? <a href="{%url 'signup'%}">Sign up here</a>
+    </div>
+</div>
+
+</body>
+</html>
