@@ -99,9 +99,9 @@ def HospitalDashboard(request):
     user=request.session.get("hospital_id")
     if user==None:
         return redirect("login")
-    hospital=Hospital.objects.all()
-    pts=Patient.objects.all()
-    staff=Staff.objects.all()
+    hospital=Hospital.objects.filter(id=user).first()
+    pts=Patient.objects.filter(user=hospital)
+    staff=Staff.objects.filter(staff=hospital)
     context={
         "hospital":hospital,
         "patient":pts,
@@ -145,8 +145,10 @@ def staffDashboard(request):
         context={
             "s":staff_id
         }
-        pass
+        
     return render(request,"staffDashboard.html",context)
+
+
 def Logout(request):
     request.session["hospital_id"]=None
     return redirect("home")
@@ -192,7 +194,7 @@ def PatientSignup(request):
             time.sleep(3)
             return redirect("patientLogin")
         
-        if password != con_password:
+        elif password != con_password:
             messages.error(request,"Password does not match")
             return redirect("patientSignup")
         

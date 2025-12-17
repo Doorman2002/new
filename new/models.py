@@ -19,6 +19,8 @@ class Hospital(models.Model):
     password=models.CharField(max_length=100)
 
 class Staff(models.Model):
+    staff=models.ForeignKey(Hospital,on_delete=models.CASCADE,null=True)
+
     name=models.TextField(blank=False,null=False)
     email=models.EmailField(blank=False,null=False,unique=True)
     phonenumber=models.IntegerField(blank=False,null=False)
@@ -29,7 +31,7 @@ class Staff(models.Model):
     dept=models.CharField(blank=False,null=False)
 
 class Patient(models.Model):
-    # user = models.ForeignKey(Hospital, on_delete=models.CASCADE, null=True
+    user = models.ForeignKey(Hospital, on_delete=models.CASCADE, null=True)
     appointmentdate = models.CharField(blank=False, null=False, default="2025/12/16")
     appointmentstaff = models.CharField(blank=False, null=False, default="staff")
     appointmentpurpose = models.CharField(blank=False, null=False, default="checkup")
