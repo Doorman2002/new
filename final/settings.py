@@ -30,7 +30,10 @@ ALLOWED_HOSTS = [
     ".onrender.com",
 ]
 
-
+# l='127.0.0.1'
+# ALLOWED_HOSTS = [
+#    l
+# ]
 
 # Application definition
 

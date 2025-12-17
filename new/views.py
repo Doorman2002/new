@@ -45,7 +45,7 @@ def MindcareDashboard(request):
     return render(request,"mindcareDashboard.html",context)
 
 def MedVerify(request):
-    return render(request,"medverify.html")
+    return render(request,"new/medverify.html")
 
 def SignUp(request):
     if request.method=="POST":
